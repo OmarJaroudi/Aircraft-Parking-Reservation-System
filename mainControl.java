@@ -10,13 +10,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
-
 
 public class MainControl {
 
@@ -52,10 +54,15 @@ public class MainControl {
 	private Label botCheck;
 	@FXML
 	private TextField botText;
+		
+	
 	
 	public void Login (ActionEvent event) throws Exception {
-		
-		if(event.getSource()==signup) {
+		Socket s = new Socket("127.0.0.1", 1927);
+	    DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+	    DataInputStream dis = new DataInputStream(s.getInputStream());
+	    
+		if(event.getSource()==signup) { 
 			Stage primaryStage = new Stage();
 			Parent root = FXMLLoader.load(getClass().getResource("/application/sign_up.fxml"));
 			Scene scene = new Scene(root,400,400);
@@ -66,50 +73,31 @@ public class MainControl {
 			
 		}
 		if(event.getSource()==login) {
-			
-			String u = username.getText();
-			String p = password.getText();
-			ConnectionClass connect = new ConnectionClass();
-			Connection connection = connect.getConnection();
-			Statement statement=connection.createStatement();
-			ResultSet r = statement.executeQuery("SELECT * FROM clientinfo as t WHERE t.username = '"+u+"'");
-			if(!r.next()) {
-				label1.setText("Username doesn't exist!");
+			dos.writeUTF("LOGIN"+"/"+username.getText() + "/" + password.getText());
+			String res = dis.readUTF();
+			if(res.equals("invalid username"))
+				label1.setText(res);
+			else if(res.equals("invalid password")) {
+				label1.setText(" ");
+				label2.setText(res);
 			}
 			else {
 				label1.setText(" ");
-				r = statement.executeQuery("SELECT * FROM clientinfo as t WHERE t.password = '"+p+"' and t.username = '"+u+"'");
-				if(!r.next()) {
-					label2.setText("Wrong password!");
-				}
-				else {
-					label2.setText(" ");
-					((Node)(event.getSource())).getScene().getWindow().hide();
-					Stage controlStage = new Stage();
-					Parent root = FXMLLoader.load(getClass().getResource("/application/controller.fxml"));
-					Scene scene = new Scene(root,400,400);
-					scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-					controlStage.setScene(scene);
-					controlStage.setResizable(false);
-					controlStage.show();
-				}
-			}
+				label2.setText(" ");
+				((Node)(event.getSource())).getScene().getWindow().hide();
+				Stage controlStage = new Stage();
+				Parent root = FXMLLoader.load(getClass().getResource("/application/controller.fxml"));
+				Scene scene = new Scene(root,600,600);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				controlStage.setScene(scene);
+				controlStage.show();
+			} 
+
 		}
+		
 	}
-	public static boolean ValidEmail (String email) {
-		if(email.length()<=8)
-			return false;
-		   for(int i=0;i<email.length();i++) {
-			   if(email.charAt(i)=='@' && i!=0 && i!=email.length()-3) {
-				   for(int j=i+1;j<email.length();j++) {
-					   if(email.charAt(j)=='.' && j!=email.length()-1)
-						   return true;
-				   }
-			   }
-				   
-		   }
-		   return false;
-	}
+	
+	 
 	public String randomGenString() {
 		 String word="";
 		    Random random = new Random();
@@ -121,68 +109,33 @@ public class MainControl {
 		    return word;
 	}
 	public void Signup(ActionEvent event) throws Exception {
-		
+		Socket s = new Socket("127.0.0.1", 1927);
+	    DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+	    DataInputStream dis = new DataInputStream(s.getInputStream());
 		
 		if(event.getSource()==create) {
-			ConnectionClass connect = new ConnectionClass();
-			Connection connection = connect.getConnection();
-			Statement statement=connection.createStatement();
-			String u = user.getText();
-			String p = pass.getText();
-			String e = email.getText();
-			boolean unique = false;
-			int ID = 0;
-			while(unique==false) {
-				Random rand = new Random();
-				ID = 1000 + rand.nextInt(5000);
-				ResultSet t = statement.executeQuery("SELECT * FROM clientinfo as t WHERE t.ID = '"+ID+"'");
-				if(!t.next())
-					unique = true;
+			dos.writeUTF("CREATE"+"/"+user.getText() + "/" + pass.getText() +"/" + pass2.getText() + "/" + email.getText() + "/" + botText.getText() + "/" + botLabel.getText());
+			String res = dis.readUTF();
+			if(!res.equals(" ") && !res.equals("Invalid expression")) {
+				signupLabel.setText(res);
 			}
-			
-			
-			boolean info = false;
-			ResultSet r = statement.executeQuery("SELECT * FROM clientinfo as t WHERE t.username = '"+u+"'");
-			
-			if(!r.next()) {
-				r = statement.executeQuery("SELECT * FROM clientinfo as t WHERE t.email = '"+e+"'");
-				if(!r.next()) {
-					if(!ValidEmail(e)) 
-						signupLabel.setText("Email not valid!");
-						
-					else if(pass2.getText().equals(pass.getText())) {
-						signupLabel.setText(" ");
-						info = true;
-					}
-					else {
-						signupLabel.setText("Passwords don't match!");
-					}
-				}
-				else {
-					signupLabel.setText("an account with this email already exists!");
-				}
-			}
-			else {
-				signupLabel.setText("username already exists!");
-			}
-			
-			boolean bot = true; 
-			if(botText.getText().equals(botLabel.getText())) {
-				bot = false;
-				botCheck.setText(" ");
-			}
-			if(info==true && bot==false) {
-				statement.executeUpdate("INSERT INTO clientinfo (username,email,password,ID) VALUE ('"+u+"','"+e+"','"+p+"','"+ID+"')");
-				((Node)(event.getSource())).getScene().getWindow().hide();
-			}
-			else {
+			else if (res.equals("Invalid expression")) {
 				String w = randomGenString();
 				botLabel.setText(w);
-				botCheck.setText("Invalid expression");
 			}
-			
+			else {
+				((Node)(event.getSource())).getScene().getWindow().hide();
+				Stage controlStage = new Stage();
+				Parent root = FXMLLoader.load(getClass().getResource("/application/login.fxml"));
+				Scene scene = new Scene(root,400,400);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				controlStage.setScene(scene);
+				controlStage.setResizable(false);
+				controlStage.show();
+			}
 		}
 	}
+	
 	
 	
 	
