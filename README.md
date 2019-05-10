@@ -129,7 +129,7 @@ It is possible to locate the server on a remote host, but you would have to spec
 
             OUTPUTSTREAM ------------------------>         ---------------------------> INPUTSTREAM  
 	    
-CLIENT                                           SOCKET(IP,port)                                        SERVER
+	CLIENT			                 SOCKET(IP,port)           				SERVER
 
 	    INPUTSTREAM  <------------------------         <--------------------------- OUTPUTSTREAM
 
