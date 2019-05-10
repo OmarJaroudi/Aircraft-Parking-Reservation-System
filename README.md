@@ -40,20 +40,31 @@ Description: There are 10 gates, each gate having 12 time slots, with each slot 
 4. Sign up: The user is prompted to enter all necessary fields (username, email, password, confirm password), and to confirm
    they are not a bot by completing a CAPTCHA.
    Errors that might pop up on the screen:
+   
    --> "username already exists" <======> if the client attempts to create an account with a username that is already registered
+   
    --> "passwords don't match"   <======> if the 'password' field doesn't match the 'confirm password' field
+   
    --> "Invalid email"           <======> if the client enters an email with an improper format
+   
 					  the server has a functionality that checks the validity of emails
+					  
 						--> email.length > threshhold
+						
 						--> email contains an @ symbol
+						
 						--> email contains a . symbol after the @ symbol
-  -->Invalid expression          <======> if the CAPTCHA value entered by the user is incorrect
+						
+  -->Invalid expression          
+  				<======> if the CAPTCHA value entered by the user is incorrect
+				
 					  the user is then presented with a new randomly generated CAPTCHA
 
   There is a button in the lower right corner that enables the user to go back to the mian menu and cancel the signup process
 
 5. Successful Login: The client is presented with 6 options and a logout option
 	Option 1: "View available gates"
+	
 	--> The client can view whether each of the 10 gates is available or not
 	    The user is presented with the 10 gates, and prompted to press "Refresh"
 	    This is to make sure that the results are the most up to date
@@ -62,18 +73,21 @@ Description: There are 10 gates, each gate having 12 time slots, with each slot 
 	    The user can either go back to main menu (lower right corner), or proceed to reserve a time slot(lower left corner)
 		
 	Option 2: "View time slots for a gate"
+	
 	--> The client can view the availability of all time slots for a certain gate 
 	    The client is prompted to enter a valid gate number and press confim
 	    Then they will be able to view the status of each time slot for this gate, as "Available" or "Unavailable"
 	    The user can either go back to main menu (lower right corner), or proceed to reserve a time slot(lower left corner)
 
 	Option 3: "Search for a specific time slot"
+	
 	--> The client can search for a specific time slot and view its availability across all gates
 	    The client is prompted to select one of the 12 time slots in front of them
 	    Upon doing so, they will be able to view whether the status of this slot at each gate, as "available" or "Unavailable"
 	    The user can either go back to main menu (lower right corner), or proceed to reserve a time slot(lower left corner)
 
 	Option 4:"view history of interactions with server"
+	
 	--> The client can view their past interactions with server (logins, signups, logouts, reservations, searches)
 	    The client is prompted to confirm their identity by entering their valid password and pressing confirm
 	    Upon doing so, the client is presented with all transactions recorded on the server since they have signed up
@@ -81,6 +95,7 @@ Description: There are 10 gates, each gate having 12 time slots, with each slot 
 	     The user can go back to main menu (lower right corner)
 
 	Option 5:"cancel a reservation"
+	
 	--> The client can cancel a reservation they have previously made
 	    The client is prompted to ennter  a valid gate number and time slot
 	    Then the server will verify if the client has previously made a resevration with this info before
@@ -90,6 +105,7 @@ Description: There are 10 gates, each gate having 12 time slots, with each slot 
 	    The user can go back to main menu (lower right corner)
 
 	Option 6:"waiting list"
+	
 	--> Client can view and update a waiting list for the gates (in case resevrations are not possible)
 
 
@@ -112,7 +128,9 @@ It is possible to locate the server on a remote host, but you would have to spec
                                         *************** VISUALISATION **************
 
             OUTPUTSTREAM ------------------------>         ---------------------------> INPUTSTREAM  
+	    
 CLIENT                                           SOCKET(IP,port)                                        SERVER
+
 	    INPUTSTREAM  <------------------------         <--------------------------- OUTPUTSTREAM
 
 
