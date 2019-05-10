@@ -27,6 +27,7 @@ Description: There are 10 gates, each gate having 12 time slots, with each slot 
 
                                        *************** RUNNING THE CLIENT ****************
 
+
 1. Run the server
 2. Run Main.main
 3. Client will be prompted to enter login credentials (username and password). After this , they press login.
