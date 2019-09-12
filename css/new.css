@@ -1,0 +1,29 @@
+.login-bg{
+	-fx-background-color: linear-gradient(to top,#B0C4DE,#000080);
+	
+	
+}
+
+.button1{
+	-fx-background-color: linear-gradient(to top,#FF8C00,#FF8C00);
+	
+	
+}
+
+.button2{
+	-fx-background-color: linear-gradient(to top,#C30000,#C30000);
+	
+	
+}
+
+.button3{
+	-fx-background-color: linear-gradient(to top,#000080,#000080);
+	
+	
+}
+
+.table1{
+	-fx-background-color: linear-gradient(to top,#ADD8E6,#ADD8E6);
+	
+	
+}
