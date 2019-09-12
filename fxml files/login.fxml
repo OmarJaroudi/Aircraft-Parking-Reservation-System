@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="644.0" prefWidth="940.0" styleClass="login-bg" stylesheets="@new.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainControl">
+   <children>
+      <TextField fx:id="username" layoutX="377.0" layoutY="236.0" prefHeight="40.0" prefWidth="187.0" promptText="Username">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font></TextField>
+      <PasswordField fx:id="password" layoutX="377.0" layoutY="306.0" prefHeight="40.0" prefWidth="187.0" promptText="Password">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></PasswordField>
+      <Button fx:id="login" layoutX="431.0" layoutY="398.0" mnemonicParsing="false" onAction="#Login" prefHeight="40.0" prefWidth="76.0" text="Login" textFill="#113799">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font></Button>
+      <Button fx:id="signup" blendMode="SRC_ATOP" layoutX="382.0" layoutY="517.0" mnemonicParsing="false" onAction="#Login" prefHeight="28.0" prefWidth="181.0" text="Sign up" textFill="#113799">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font></Button>
+      <Label fx:id="label" alignment="CENTER" layoutX="260.0" layoutY="114.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="48.0" prefWidth="400.0" text="WELCOME" textFill="WHITE">
+         <font>
+            <Font name="Elephant" size="36.0" />
+         </font>
+         <effect>
+            <Glow level="0.69" />
+         </effect>
+      </Label>
+      <Label fx:id="label1" layoutX="395.0" layoutY="276.0" onDragDetected="#Login" prefHeight="17.0" prefWidth="149.0" text=" " textFill="RED" />
+      <Label fx:id="label2" layoutX="400.0" layoutY="354.0" onDragDetected="#Login" prefHeight="17.0" prefWidth="139.0" text=" " textFill="RED" />
+      <ImageView fitHeight="40.0" fitWidth="48.0" layoutX="330.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+      <Image url="@user_lock.png" />
+      </image>
+         <effect>
+            <Glow />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="48.0" layoutX="331.0" layoutY="307.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+      <Image url="@Key.png" />
+      </image>
+      </ImageView>
+      <Text fill="#341ab8cc" fontSmoothingType="LCD" layoutX="383.0" layoutY="503.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account yet?" wrappingWidth="197.15807735919952">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="172.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Free-Airplane-Transparent-Background.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
